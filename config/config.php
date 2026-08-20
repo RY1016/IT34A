@@ -22,12 +22,12 @@ try {
         DB_PASS,
         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
         );
-        echo "Connected successfully";
-        logActivity($pdo,$user_id,$user_email,'connect_db','success');
-
+        //echo "Connected successfully";
+        //echo "Connection failed: " . $e->getMessage();
+        //logActivity($pdo,$user_id,$user_email,'connect_db','success');
     }catch (PDOException $e) {
         die("Connection failed: " . $e->getMessage());
-        echo "Connection failed: " . $e->getMessage();
+        
     } 
 
 

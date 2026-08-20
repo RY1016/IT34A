@@ -14,9 +14,8 @@ define('DB_PASS', '');
 $user_id = "root" ?? null;
 $user_email = "root" ?? null;
 
-try {
-
-    $pdo = new PDO(
+    try {
+        $pdo = new PDO(
         "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, 
         DB_USER, 
         DB_PASS,
@@ -25,11 +24,19 @@ try {
         //echo "Connected successfully";
         //echo "Connection failed: " . $e->getMessage();
         //logActivity($pdo,$user_id,$user_email,'connect_db','success');
-    }catch (PDOException $e) {
+
+        $success = logActivity($pdo,$user_id,$user_email,'db_connect','success');
+
+        if ($success) {
+            echo "Activity logged inserted successfully.";
+        } else {
+            echo "Failed to insert activity.";
+    
+    
+        }catch (PDOException $e) {
         die("Connection failed: " . $e->getMessage());
         
     } 
-
 
 
 ?>

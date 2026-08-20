@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-require_once('includes/activity-logger.php');
+require_once(__DIR__ . '/../includes/activity-logger.php');
 //define('', '');
 
 define('BASE_URL', 'http://localhost/it34a');
@@ -31,12 +31,11 @@ $user_email = "root" ?? null;
             echo "Activity logged inserted successfully.";
         } else {
             echo "Failed to insert activity.";
-    
+            }
     
         }catch (PDOException $e) {
         die("Connection failed: " . $e->getMessage());
         
     } 
-
 
 ?>

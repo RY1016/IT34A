@@ -15,3 +15,5 @@ if ($success) {
 }
 
 ?>
+
+//require_once(__DIR__ . '/../includes/activity-logger.php');

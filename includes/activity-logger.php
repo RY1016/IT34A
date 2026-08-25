@@ -1,51 +1,50 @@
 <?php
-function logActivity($pdo,$user_id,$email,$action,$status='success') {
-    
 
-    try{
+function logActivity($pdo, $user_id, $user_email, $action, $status = 'success')
+{
+    try {
 
-       //Get Clients IPAdd
-        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? 'unknown';
-       //String into Array
-        if (strpos($ip, ',') !== false) {
-            $ip = trim(explode(',', $ip)[0]);
-        }
+        // Get IP address
+        $ip = $_SERVER['REMOTE_ADDR'] ?? 'unknown';
 
-        //Gets user agent (Browser)
-        $user_agent = substr($_SERVER['HTTP_USER_AGENT'] ?? 'unknown', 0, 255);
-
-        //Query
-        $stmt = $pdo->prepare\
-        ("
-        INSERT INTO activity_logs (
-        user_id,
-        email, 
-        action, 
-        status, 
-        ip_address, 
-        user_agent
-        
-        ) VALUES (?, ?, ?, ?, ?, ?)"
+        // Get browser information
+        $user_agent = substr(
+            $_SERVER['HTTP_USER_AGENT'] ?? 'unknown',
+            0,
+            255
         );
 
-        //Execute the INSERT
+        // SQL query
+        $stmt = $pdo->prepare("
+            INSERT INTO activity_logs (
+                user_id,
+                user_email,
+                activity_log_action,
+                activity_log_status,
+                activity_log_ip_address,
+                activity_log_user_agent
+            )
+            VALUES (?, ?, ?, ?, ?, ?)
+        ");
+
+        // Execute query
         $success = $stmt->execute([
-            $user_id, 
-            $user_email, 
-            $action, 
-            $status, 
-            $ip, 
+            $user_id,
+            $user_email,
+            $action,
+            $status,
+            $ip,
             $user_agent
-            
-            ]);
+        ]);
 
         return $success;
 
     } catch (PDOException $e) {
-        error_log("activity log error: " . $e->getMessage());
+
+        error_log("Activity log error: " . $e->getMessage());
+
         return false;
     }
-
-
 }
+
 ?>

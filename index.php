@@ -15,12 +15,40 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $login = trim($_POST['login'] ?? '');
     $password = $_POST['password'] ?? '';
     
+    
+    if ($login==='' || $password==='') {
+        $error = 'Invalid login credentials';
+        logActivity(
+            $pdo, 
+            $login, 
+            'login',
+            'failed',
+        );
+
+    } else {
+        if(loginUser($pdo, $login, $password)){
+        
+            logActivity(
+                $pdo, 
+                $_SESSION['user_id'], 
+                $_SESSION['user_username'], 
+                'login', 
+                'success'
+            );
+
+            header('Location: ' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php');
+            exit;
+        }
+    }
+
     if (loginUser($pdo, $login, $password)){
         header('Location: ' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php');
         exit;
     }
  
     $error = 'Invalid login credentials';
+
+    
 }
 ?>
 

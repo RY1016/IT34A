@@ -2,8 +2,10 @@
 require __DIR__ . '/config/config.php';
 require __DIR__ . '/config/functions.php';
 
-// Ensure session_start(); is called (here or in config.php)
 
+
+
+// Ensure session_start(); is called (here or in config.php)
 if(isset($_SESSION['user_id'])){
     header('Location: ' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php');
     exit;

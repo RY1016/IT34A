@@ -35,3 +35,12 @@ CREATE TABLE IF NOT EXISTS users (
 
 insert into users (user_email, user_username, user_password, user_role) 
 values ('admin@gmail.com','admin','	$2a$05$bvIG6Nmid91Mu9RcmmWZfO5HJIMCT8riNW0hEp8f6/FuA2/mHZFpe','admin');
+
+insert into users (user_email, user_username, user_password, user_role) 
+values ('manager@gmail.com','manager','	$2a$05$bvIG6Nmid91Mu9RcmmWZfO5HJIMCT8riNW0hEp8f6/FuA2/mHZFpe','manager');
+
+insert into users (user_email, user_username, user_password, user_role) 
+values ('user@gmail.com','user','	$2a$05$bvIG6Nmid91Mu9RcmmWZfO5HJIMCT8riNW0hEp8f6/FuA2/mHZFpe','user');
+
+
+

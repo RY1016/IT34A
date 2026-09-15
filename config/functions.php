@@ -23,13 +23,14 @@ function loginUser($pdo,$login,$password) {
     $stmt = $pdo->prepare($sql);
     $stmt->execute([':login'=>$login]);
 
-    $user = $stmt->fetch();
+   // Explicit FETCH_ASSOC
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    if($user){
+    if(!$user){
         return false;
     }
 
-    if(!password_verify($password,$user['user_password'])){
+    if(!password_verify($password, $user['user_password'])){
         return false;
     }
 

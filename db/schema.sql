@@ -34,8 +34,4 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 insert into users (user_email, user_username, user_password, user_role) 
-values ('admin@gmail.com','admin','admin123','admin');
-
-UPDATE `users` 
-SET `user_password` = '$2y$10$4.aBq3k0pQ65.x2LpEa.k.6G4SXZzB0T2K8H7qD9O8f/gXJ.M4Y4O' 
-WHERE `user_username` = 'admin';
+values ('admin@gmail.com','admin','	$2a$05$bvIG6Nmid91Mu9RcmmWZfO5HJIMCT8riNW0hEp8f6/FuA2/mHZFpe','admin');

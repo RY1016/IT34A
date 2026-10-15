@@ -30,6 +30,11 @@ function loginUser($pdo,$login,$password) {
         return false;
     }
 
+    // Check if user already has an active session
+    if(hasActiveUserSession($pdo, $user['user_id'])){
+        return 'active_session';
+    }
+
     //session Variables
     $_SESSION['user_id'] = $user['user_id'];
     $_SESSION['user_email'] = $user['user_email'];

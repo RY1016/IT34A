@@ -1,6 +1,5 @@
 <?php
 require __DIR__ . '/config/config.php';
-require __DIR__ . '/config/functions.php';
 
 
 
@@ -17,40 +16,38 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $login = trim($_POST['login'] ?? '');
     $password = $_POST['password'] ?? '';
     
-    
     if ($login==='' || $password==='') {
         $error = 'Invalid login credentials';
         logActivity(
             $pdo, 
+            null, 
             $login, 
             'login',
-            'failed',
+            'failure'
         );
-
     } else {
         if(loginUser($pdo, $login, $password)){
-        
             logActivity(
                 $pdo, 
                 $_SESSION['user_id'], 
-                $_SESSION['user_username'], 
+                $_SESSION['user_email'], 
                 'login', 
                 'success'
             );
 
             header('Location: ' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php');
             exit;
+        } else {
+            $error = 'Invalid login credentials';
+            logActivity(
+                $pdo, 
+                null, 
+                $login, 
+                'login', 
+                'failure'
+            );
         }
     }
-
-    if (loginUser($pdo, $login, $password)){
-        header('Location: ' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php');
-        exit;
-    }
- 
-    $error = 'Invalid login credentials';
-
-    
 }
 ?>
 

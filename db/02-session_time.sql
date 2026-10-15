@@ -5,7 +5,7 @@ CREATE TABLE user_sessions(
     user_id INT NOT NULL,
 
     session_start DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    session_end DATETIME NOT NULL,
+    session_end DATETIME DEFAULT NULL,
     session_duration INT DEFAULT NULL,
 
     CONSTRAINT fk_user_sessions_user_id

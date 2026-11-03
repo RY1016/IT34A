@@ -43,6 +43,8 @@ function loginUser($pdo,$login,$password) {
 
     $_SESSION['session_id'] = startUserSession($pdo);
 
+    $_SESSION['last_activity'] = time();
+
     return true;
 }
 
@@ -51,6 +53,8 @@ function requireLogin() {
         header('Location: ' . BASE_URL . '/index.php');
         exit;
     }
+
+    checkSessionTimeout();
 }
 
 function requireRole($role){

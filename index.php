@@ -11,6 +11,11 @@ if(isset($_SESSION['user_id'])){
 }
 
 $error = '';
+$timeoutMessage = '';
+
+if(isset($_GET['timeout'])){
+    $timeoutMessage = 'Your session has expired. Please log in again.';
+}
 
 if($_SERVER['REQUEST_METHOD'] === 'POST'){
     $login = trim($_POST['login'] ?? '');
@@ -64,6 +69,10 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
     </head>
 
     <body>
+            <?php if ($timeoutMessage): ?>
+                <p><?= htmlspecialchars($timeoutMessage)?></p>
+            <?php endif; ?>
+
             <?php if ($error): ?>
                 <p><?= htmlspecialchars($error)?></p>
             <?php endif; ?>

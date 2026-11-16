@@ -5,7 +5,7 @@ require __DIR__ . '/config/config.php';
 
 
 // Ensure session_start(); is called (here or in config.php)
-if(isset($_SESSION['user_id'])){
+if (isset($_SESSION['user_id'])) {
     header('Location: ' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php');
     exit;
 }
@@ -13,46 +13,49 @@ if(isset($_SESSION['user_id'])){
 $error = '';
 $timeoutMessage = '';
 
-if(isset($_GET['timeout'])){
+if (isset($_GET['timeout'])) {
     $timeoutMessage = 'Your session has expired. Please log in again.';
 }
 
-if($_SERVER['REQUEST_METHOD'] === 'POST'){
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    requireCsrfToken();
+
     $login = trim($_POST['login'] ?? '');
     $password = $_POST['password'] ?? '';
-    
-    if ($login==='' || $password==='') {
+
+    if ($login === '' || $password === '') {
         $error = 'Invalid login credentials';
         logActivity(
-            $pdo, 
-            null, 
-            $login, 
+            $pdo,
+            null,
+            $login,
             'login',
             'failure'
         );
     } else {
         $result = loginUser($pdo, $login, $password);
 
-        if($result === true){
+        if ($result === true) {
             logActivity(
-                $pdo, 
-                $_SESSION['user_id'], 
-                $_SESSION['user_email'], 
-                'login', 
+                $pdo,
+                $_SESSION['user_id'],
+                $_SESSION['user_email'],
+                'login',
                 'success'
             );
 
             header('Location: ' . BASE_URL . '/app/' . $_SESSION['user_role'] . '/index.php');
             exit;
-        } elseif ($result === 'active_session'){
+        } elseif ($result === 'active_session') {
             $error = 'This account is already logged in on another device';
         } else {
             $error = 'Invalid login credentials';
             logActivity(
-                $pdo, 
-                null, 
-                $login, 
-                'login', 
+                $pdo,
+                null,
+                $login,
+                'login',
                 'failure'
             );
         }
@@ -62,38 +65,37 @@ if($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-    </head>
 
-    <body>
-            <?php if ($timeoutMessage): ?>
-                <p><?= htmlspecialchars($timeoutMessage)?></p>
-            <?php endif; ?>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
 
-            <?php if ($error): ?>
-                <p><?= htmlspecialchars($error)?></p>
-            <?php endif; ?>
-                
-        <h1>User Login</h1>
-            <form method="POST">
-            <label>User or email</label>
-            <input type="text"
-                    name="login"
-                    required
-            >
+<body>
+    <?php if ($timeoutMessage): ?>
+        <p><?= htmlspecialchars($timeoutMessage) ?></p>
+    <?php endif; ?>
 
-                <br>
-                <label>Password</label>
-                <input type="password"
-                        name="password"
-                        required
-                >
+    <?php if ($error): ?>
+        <p><?= htmlspecialchars($error) ?></p>
+    <?php endif; ?>
 
-            <br>
-            <button type="submit"> Sign-In</button>
-            </form>
-    </body>
+    <h1>User Login</h1>
+    <form method="POST">
+
+        <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(generateCsrfToken()) ?>">
+
+        <label>User or email</label>
+        <input type="text" name="login" required>
+
+        <br>
+        <label>Password</label>
+        <input type="password" name="password" required>
+
+        <br>
+        <button type="submit"> Sign-In</button>
+    </form>
+</body>
+
 </html>

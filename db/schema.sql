@@ -33,14 +33,15 @@ CREATE TABLE IF NOT EXISTS users (
         ON UPDATE CURRENT_TIMESTAMP
 );
 
-insert into users (user_email, user_username, user_password, user_role) 
-values ('admin@gmail.com','admin','	$2a$05$bvIG6Nmid91Mu9RcmmWZfO5HJIMCT8riNW0hEp8f6/FuA2/mHZFpe','admin');
 
 insert into users (user_email, user_username, user_password, user_role) 
-values ('manager@gmail.com','manager','	$2a$05$bvIG6Nmid91Mu9RcmmWZfO5HJIMCT8riNW0hEp8f6/FuA2/mHZFpe','manager');
+values ('admin2@gmail.com','admin2','$2y$10$l6PMp5Rkmf6QYYUlvqBo5OpbmjBerdLM6ncV3JdM4amMreQEFfZcS','admin');
 
 insert into users (user_email, user_username, user_password, user_role) 
-values ('user@gmail.com','user','	$2a$05$bvIG6Nmid91Mu9RcmmWZfO5HJIMCT8riNW0hEp8f6/FuA2/mHZFpe','user');
+values ('manager2@gmail.com','manager2','$2y$10$l6PMp5Rkmf6QYYUlvqBo5OpbmjBerdLM6ncV3JdM4amMreQEFfZcS','manager');
+
+insert into users (user_email, user_username, user_password, user_role) 
+values ('user2@gmail.com','user2','$2y$10$l6PMp5Rkmf6QYYUlvqBo5OpbmjBerdLM6ncV3JdM4amMreQEFfZcS','user');
 
 
 
